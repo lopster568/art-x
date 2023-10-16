@@ -1,10 +1,5 @@
 import { MakePaymentForm } from "@/components/MakePaymentForm";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
 
 const Page = () => {
     return (
@@ -29,9 +24,9 @@ const Page = () => {
                     </div>
 
                     <div>
-                        <div className='mx-auto min-w-max max-w-2xl p-6 lg:p-8'>
+                        <div className='mx-auto min-w-max max-w-2xl p-6'>
                             <div className='mt-16 flow-root sm:mt-24'>
-                                <div className='text-left -m-2 rounded-xl bg-gray-900/10 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
+                                <div className='text-left -m-2 rounded-xl bg-gray-900/10 p-8 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl'>
                                    <MakePaymentForm />
                                 </div>
                             </div>

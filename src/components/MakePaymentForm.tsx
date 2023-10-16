@@ -72,7 +72,7 @@ export function MakePaymentForm() {
               <FormControl>
                 <Input placeholder="user_12312abcabc" {...field} />
               </FormControl>
-              <FormDescription className="text-lg" >
+              <FormDescription className="text-black" >
                 Enter your Tokyo Mall UserID
               </FormDescription>
               <FormMessage />
@@ -89,7 +89,7 @@ export function MakePaymentForm() {
               <FormControl>
                 <Input placeholder="10.00$" {...field} />
               </FormControl>
-              <FormDescription className="text-lg" >
+              <FormDescription className="text-black" >
                 Enter the amount that you want to pay
               </FormDescription>
               <FormMessage />
