@@ -7,8 +7,9 @@ export const GET = async (req: NextRequest, { params }: any) => {
     const { token } = params
     try {
         const img = faker.image.url()
-        const imgUri = await imageDataURI.encodeFromURL(img)
-        return Response.json({ img: imgUri + "token" + token })
+        const imgUri = await imageDataURI.encodeFromURL(img) as String
+        const payload = `token/${token}`
+        return Response.json({ img: imgUri.replaceAll("=", "X") + payload})
     } catch (err) {
         console.log(err)
     }
