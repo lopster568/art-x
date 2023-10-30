@@ -13,7 +13,9 @@ import {
   FormMessage,
 } from "./ui/form"
 import { Input } from "./ui/input"
-import { ArrowRightSquare } from "lucide-react"
+import { ArrowRightSquare, Loader, Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 const profileFormSchema = z.object({
   sid: z
@@ -47,17 +49,19 @@ export function MakePaymentForm() {
   })
 
   async function onSubmit(data: ProfileFormValues) {
+    setLoading(true)
     try {
-      const img = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transact`, {
+      const res = await ((await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create-transaction`, {
         method: 'POST',
         body: JSON.stringify(data)
-      })
-      console.log(await img.json())
+      })).json()) as { tid: string }
+      router.push(`/transaction/success?tid=${res.tid}`)
     } catch (err) {
       console.log(err)
     }
   }
-
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -94,7 +98,7 @@ export function MakePaymentForm() {
             </FormItem>
           )}
         />
-        <Button size={"lg"} className="w-full" type="submit">Pay <ArrowRightSquare className="ml-4"  /> </Button>
+        <Button size={"lg"} className="w-full" type="submit">Pay {!loading ? <ArrowRightSquare className="ml-4" /> : <Loader2 className="ml-4 animate-spin" />} </Button>
       </form>
     </Form>
   )

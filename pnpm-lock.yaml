@@ -62,6 +62,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  react-file-base64:
+    specifier: ^1.0.3
+    version: 1.0.3(react@18.2.0)
   react-hook-form:
     specifier: ^7.47.0
     version: 7.47.0(react@18.2.0)
@@ -3878,6 +3881,14 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-file-base64@1.0.3(react@18.2.0):
+    resolution: {integrity: sha512-itGMFH6IkJUZF2p0YXQnUBqzUHFaMYcs+ssD9e4j1XJGHRibGe8kiLr6y46oAIw1JknX/bJUUogDJOk/o91TMg==}
+    peerDependencies:
+      react: ^15.0.2
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-hook-form@7.47.0(react@18.2.0):

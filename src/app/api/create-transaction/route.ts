@@ -27,7 +27,7 @@ export const POST = async (request: Request) => {
         }
         const transactionRef = collection(db, "transactions")
         await setDoc(doc(transactionRef, tid), JSON.parse(JSON.stringify(transaction)))
-        return Response.json({ img })
+        return Response.json({ tid })
     } catch (err) {
         console.log(err)
     }

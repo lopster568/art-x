@@ -65,10 +65,10 @@ const UserAccountNav = async ({
                 </div>
 
                 <DropdownMenuSeparator />
-
+{/* 
                 <DropdownMenuItem asChild>
                     <Link href='/dashboard'>Dashboard</Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
                 <DropdownMenuSeparator />
 

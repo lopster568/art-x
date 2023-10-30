@@ -40,12 +40,12 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <Link
-                                        href='/dashboard'
+                                        href='/redeem-pay'
                                         className={buttonVariants({
                                             variant: 'ghost',
                                             size: 'sm',
                                         })}>
-                                        Dashboard
+                                        Redeem Payment
                                     </Link>
                                     <UserAccountNav
                                         name={

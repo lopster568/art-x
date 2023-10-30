@@ -2,11 +2,6 @@ import { MakePaymentForm } from "@/components/MakePaymentForm";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 
 const Page = () => {
-
-    const submitHandler = () => {
-        
-    }
-
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
             <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
