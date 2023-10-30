@@ -8,7 +8,7 @@ const Page = (
         searchParams: { [key: string]: string | string[] | undefined }
       }
 ) => {
-    const sid = searchParams["sid"]
+    const sid = searchParams["sid"] as String
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
             <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
@@ -38,7 +38,7 @@ const Page = (
                                     <h1 className="text-lg font-bold my-2" >Scan to Pay</h1>
                                     <Image alt="qr" className="self-center" width={250} height={250} src={"/qr.webp"}  />            
                                     <p className="py-2"><span className="text-lg font-bold my-2" >OR VPA: </span>something@upi</p>
-                                    <PayGateForm />
+                                    <PayGateForm sid={sid.toString()} />
                                 </div>
                             </div>
                         </div>

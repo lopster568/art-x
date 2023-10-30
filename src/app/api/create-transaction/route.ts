@@ -4,24 +4,24 @@ import { db } from '@/lib/firebase.config';
 
 export const POST = async (request: Request) => {
     const data = await request.json()
-    const { sid, amount } = data
-
+    const { sid, amount, invoice_img } = data
     //Generating a random transaction id
     const tid = cryptoRandomString({length: 10})
 
     interface transaction {
-        img: string,
+        invoice_img: string,
         amount: number,
         timestamp: string,
         completed: boolean,
+        approve: Number,
         sid: string
     }
 
-    //Creating Transaction
+    // //Creating Transaction
     try {
-        const { img } = await (await fetch(`${process.env.BASE_URL}/api/generate-img/${tid}`)).json()
+        // const { img } = await (await fetch(`${process.env.BASE_URL}/api/generate-img/${tid}`)).json()
         const transaction: transaction = {
-            img, amount, sid,
+            invoice_img, amount, sid, approve: 0,
             timestamp: (new Date(Date.now())).toString(),
             completed: false
         }

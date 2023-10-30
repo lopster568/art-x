@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "./ui/button"
+import FileBase64 from "react-file-base64"
 import {
   Form,
   FormControl,
@@ -14,18 +15,9 @@ import {
 } from "./ui/form"
 import { Input } from "./ui/input"
 import { ArrowRightSquare } from "lucide-react"
+import { useState } from "react"
 
 const profileFormSchema = z.object({
-  sid: z
-    .string({
-      required_error: "UserID is required.",
-    })
-    .min(16, {
-      message: "Enter your 16 character UserID.",
-    })
-    .max(16, {
-      message: "Enter your 16 character UserID.",
-    }),
   amount: z
     .string({
       required_error: "Amount is required.",
@@ -40,19 +32,27 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function PayGateForm() {
+export function PayGateForm({sid} : {sid: string} ) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
   })
+  const [invoiceErr, setInvoiceErr] = useState(false)
+  const [invoiceImg, setInvoiceImg] = useState("")
 
   async function onSubmit(data: ProfileFormValues) {
+    if (invoiceImg === "") {
+      setInvoiceErr(true)
+      console.log(invoiceErr)
+      return
+    }
+    setInvoiceErr(false)
     try {
-      const img = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transact`, {
+      const payload = { ...data, invoice_img: invoiceImg, sid }
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create-transaction`, {
         method: 'POST',
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
       })
-      console.log(await img.json())
     } catch (err) {
       console.log(err)
     }
@@ -78,22 +78,27 @@ export function PayGateForm() {
           )}
         />
         <FormField
-          control={form.control}
-          name="amount"
+          name="some"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col" >
               <FormLabel>Screenshot</FormLabel>
               <FormControl>
-                <Input placeholder="10.00$" type="file" {...field} />
+                <FileBase64
+                  onDone={({ base64 }: { base64: string }) => setInvoiceImg(base64)}
+                />
               </FormControl>
               <FormDescription className="text-black" >
                 Upload the screenshot of the payment
               </FormDescription>
-              <FormMessage />
+              {
+                invoiceErr &&
+                <p className="text-red-500" >Payment Screenshot is required</p>
+              }
             </FormItem>
           )}
         />
-        <Button size={"lg"} className="w-full" type="submit">Submit <ArrowRightSquare className="ml-4"  /> </Button>
+
+        <Button size={"lg"} className="w-full" type="submit">Submit <ArrowRightSquare className="ml-4" /> </Button>
       </form>
     </Form>
   )
