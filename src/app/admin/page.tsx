@@ -1,8 +1,23 @@
+import AdminActonBtn from "@/components/AdminActionBtn";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { db } from "@/lib/firebase.config";
+import { collection, getDocs } from "firebase/firestore";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
-const Page = () => {
+interface transaction {
+    invoice_img: string,
+    amount: number,
+    timestamp: string,
+    completed: boolean,
+    approve: Number,
+    sid: string,
+    id: string
+}
+
+const Page = async () => {
+    const { approvedTransactions, rejectedTransactions, pendingTransactions } = await getAllTransactions() as any
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
             <h1 className='max-w-4xl text-3xl font-bold md:text-3xl lg:text-3xl'>
@@ -23,13 +38,15 @@ const Page = () => {
                         />
                     </div>
 
+                    {/* Pending  */}
                     <div>
                         <div className='mx-auto min-w-max max-w-2xl p-6'>
                             <div className='mt-2 flow-root'>
                                 <div className='text-left flex flex-col -m-2 rounded-xl bg-gray-900/10 p-8 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl'>
                                     <div className="relative overflow-x-auto rounded-md">
-                                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <p className="pb-4 text-lg text-blue-700 font-bold" >Pending Transactions</p>
+                                        <table className="w-full rounded-md text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
                                                     <th scope="col" className="px-6 py-3">
                                                         TransactionID
@@ -43,23 +60,128 @@ const Page = () => {
                                                     <th scope="col" className="px-6 py-3">
                                                         Action
                                                     </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Timestamp
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                    <th
-                                                        scope="row"
-                                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                                    >
-                                                        something1231ql
+                                                {
+                                                    pendingTransactions.map((transaction: transaction, i: number) => (
+                                                        <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <th
+                                                                scope="row"
+                                                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                            >
+                                                                {transaction.id}
+                                                            </th>
+                                                            <td className="px-6 py-4">{transaction.amount}$</td>
+                                                            <td className="px-6 py-4"><Link href={`/admin/img?tid=${transaction.id}`} className={buttonVariants({})} target="_blank" >View <ArrowUpRight className="ml-2" /> </Link></td>
+                                                            <td className="px-6 py-4 flex gap-4">
+                                                                <AdminActonBtn tid={transaction.id} />
+                                                            </td>
+                                                            <td className="px-6 py-4">{transaction.timestamp.split("GMT")[0]}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Approved  */}
+                    <div>
+                        <div className='mx-auto min-w-max max-w-2xl p-6'>
+                            <div className='mt-2 flow-root'>
+                                <div className='text-left flex flex-col -m-2 rounded-xl bg-gray-900/10 p-8 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl'>
+                                    <div className="relative overflow-x-auto rounded-md">
+                                        <p className="pb-4 text-lg text-green-700 font-bold" >Approved Transactions</p>
+                                        <table className="w-full rounded-md text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        TransactionID
                                                     </th>
-                                                    <td className="px-6 py-4">20$</td>
-                                                    <td className="px-6 py-4"><Button>View <ArrowUpRight className="ml-2" /> </Button></td>
-                                                    <td className="px-6 py-4 flex gap-4">
-                                                        <Button variant={"destructive"} size={"sm"} className="mrr-2" >Reject</Button>
-                                                        <Button className="bg-green-700" size={"sm"} >Approve</Button>
-                                                    </td>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Amt
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Screenshot
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Timestamp
+                                                    </th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    approvedTransactions.map((transaction: transaction, i: number) => (
+                                                        <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <th
+                                                                scope="row"
+                                                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                            >
+                                                                {transaction.id}
+                                                            </th>
+                                                            <td className="px-6 py-4">{transaction.amount}$</td>
+                                                            <td className="px-6 py-4"><Link href={`/admin/img?tid=${transaction.id}`} className={buttonVariants({})} target="_blank" >View <ArrowUpRight className="ml-2" /> </Link></td>
+                                                            <td className="px-6 py-4">{transaction.timestamp.split("GMT")[0]}</td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* rejected  */}
+                    <div>
+                        <div className='mx-auto min-w-max max-w-2xl p-6'>
+                            <div className='mt-2 flow-root'>
+                                <div className='text-left flex flex-col -m-2 rounded-xl bg-gray-900/10 p-8 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl'>
+                                    <div className="relative overflow-x-auto rounded-md">
+                                        <p className="pb-4 text-lg text-red-400 font-bold" >Rejected Transactions</p>
+                                        <table className="w-full rounded-md text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                                                <tr>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        TransactionID
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Amt
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Screenshot
+                                                    </th>
+                                                    <th scope="col" className="px-6 py-3">
+                                                        Timestamp
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    rejectedTransactions.map((transaction: transaction, i: number) => (
+                                                        <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <th
+                                                                scope="row"
+                                                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                            >
+                                                                {transaction.id}
+                                                            </th>
+                                                            <td className="px-6 py-4">{transaction.amount}$</td>
+                                                            <td className="px-6 py-4"><Link href={`/admin/img?tid=${transaction.id}`} className={buttonVariants({})} target="_blank" >View <ArrowUpRight className="ml-2" /> </Link></td>
+                                                            <td className="px-6 py-4">{transaction.timestamp.split("GMT")[0]}</td>
+                                                        </tr>
+                                                    ))
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -84,6 +206,29 @@ const Page = () => {
             </div>
         </MaxWidthWrapper>
     );
+}
+
+const getAllTransactions = async () => {
+    try {
+        const transactionsRef = collection(db, 'transactions')
+        const transactions = await getDocs(transactionsRef)
+        const approvedTransactions = [] as any | undefined
+        const rejectedTransactions = [] as any | undefined
+        const pendingTransactions = [] as any | undefined
+        transactions.forEach(doc => {
+            if (doc.data().approve === 1) {
+                approvedTransactions.push({ ...doc.data(), id: doc.id })
+            }
+            else if (doc.data().approve === 0) {
+                pendingTransactions.push({ ...doc.data(), id: doc.id })
+            } else {
+                rejectedTransactions.push({ ...doc.data(), id: doc.id })
+            }
+        })
+        return ({ approvedTransactions, rejectedTransactions, pendingTransactions })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export default Page;
