@@ -14,7 +14,6 @@ import {
 } from "./ui/form"
 import { Input } from "./ui/input"
 import { ArrowRightSquare } from "lucide-react"
-import { useRouter } from "next/navigation"
 
 const profileFormSchema = z.object({
   sid: z
@@ -27,18 +26,36 @@ const profileFormSchema = z.object({
     .max(16, {
       message: "Enter your 16 character UserID.",
     }),
+  amount: z
+    .string({
+      required_error: "Amount is required.",
+    })
+    .min(0.1, {
+      message: "Atleast 0.1$ is required.",
+    })
+    .max(1000, {
+      message: "Maximum amount is 1000$.",
+    }),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function MakePaymentForm() {
+export function PayGateForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
   })
-  const router = useRouter()
+
   async function onSubmit(data: ProfileFormValues) {
-    router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}/paygate?sid=${data.sid}`)
+    try {
+      const img = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transact`, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      console.log(await img.json())
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -46,22 +63,37 @@ export function MakePaymentForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="sid"
+          name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>StoreID</FormLabel>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
-                <Input placeholder="user_12312abcabc" {...field} />
+                <Input placeholder="10.00$" {...field} />
               </FormControl>
               <FormDescription className="text-black" >
-                Enter your Tokyo Mall UserID
+                Enter the amount that you are paying
               </FormDescription>
               <FormMessage />
             </FormItem>
-
           )}
         />
-        <Button size={"lg"} className="w-full" type="submit">Pay <ArrowRightSquare className="ml-4"  /> </Button>
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Screenshot</FormLabel>
+              <FormControl>
+                <Input placeholder="10.00$" type="file" {...field} />
+              </FormControl>
+              <FormDescription className="text-black" >
+                Upload the screenshot of the payment
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button size={"lg"} className="w-full" type="submit">Submit <ArrowRightSquare className="ml-4"  /> </Button>
       </form>
     </Form>
   )
