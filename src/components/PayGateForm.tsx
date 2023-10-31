@@ -14,8 +14,9 @@ import {
   FormMessage,
 } from "./ui/form"
 import { Input } from "./ui/input"
-import { ArrowRightSquare } from "lucide-react"
+import { ArrowRightSquare, Loader2, LoaderIcon } from "lucide-react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 const profileFormSchema = z.object({
   amount: z
@@ -23,36 +24,38 @@ const profileFormSchema = z.object({
       required_error: "Amount is required.",
     })
     .min(0.1, {
-      message: "Atleast 0.1$ is required.",
+      message: "Atleast 0.1₹ is required.",
     })
     .max(1000, {
-      message: "Maximum amount is 1000$.",
+      message: "Maximum amount is 1000₹.",
     }),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function PayGateForm({sid} : {sid: string} ) {
+export function PayGateForm({ sid }: { sid: string }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
   })
+  const router = useRouter()
   const [invoiceErr, setInvoiceErr] = useState(false)
   const [invoiceImg, setInvoiceImg] = useState("")
-
+  const [loading, setLoading] = useState(false)
   async function onSubmit(data: ProfileFormValues) {
     if (invoiceImg === "") {
       setInvoiceErr(true)
-      console.log(invoiceErr)
       return
     }
     setInvoiceErr(false)
     try {
+      setLoading(true)
       const payload = { ...data, invoice_img: invoiceImg, sid }
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create-transaction`, {
         method: 'POST',
         body: JSON.stringify(payload)
       })
+      router.push("/transactions")
     } catch (err) {
       console.log(err)
     }
@@ -66,9 +69,10 @@ export function PayGateForm({sid} : {sid: string} ) {
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Amount</FormLabel>
+              <p className="text-bold text-lg">Step 1</p>
+              <FormLabel className="text-4xl text-bold" >Amount</FormLabel>
               <FormControl>
-                <Input placeholder="10.00$" {...field} />
+                <Input className="text-2xl py-8" placeholder="100.00₹"  {...field} />
               </FormControl>
               <FormDescription className="text-black" >
                 Enter the amount that you are paying
@@ -81,7 +85,8 @@ export function PayGateForm({sid} : {sid: string} ) {
           name="some"
           render={({ field }) => (
             <FormItem className="flex flex-col" >
-              <FormLabel>Screenshot</FormLabel>
+              <p className="text-bold text-lg">Step 2</p>
+              <FormLabel className="text-4xl text-bold">Screenshot</FormLabel>
               <FormControl>
                 <FileBase64
                   onDone={({ base64 }: { base64: string }) => setInvoiceImg(base64)}
@@ -98,7 +103,7 @@ export function PayGateForm({sid} : {sid: string} ) {
           )}
         />
 
-        <Button size={"lg"} className="w-full" type="submit">Submit <ArrowRightSquare className="ml-4" /> </Button>
+        <Button size={"lg"} className="w-full" type="submit">Submit {loading ? <Loader2 className="ml-4 animate-spin" /> : <ArrowRightSquare className="ml-4" />} </Button>
       </form>
     </Form>
   )

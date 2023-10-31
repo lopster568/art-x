@@ -9,7 +9,7 @@ import { Button } from './ui/button'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import Image from 'next/image'
 import Link from 'next/link'
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server'
+import { LogoutLink, getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
 interface UserAccountNavProps {
     email: string | undefined
@@ -22,6 +22,9 @@ const UserAccountNav = async ({
     imageUrl,
     name,
 }: UserAccountNavProps) => {
+    const { getPermission } = getKindeServerSession();
+    const isAdmin = getPermission("admin").isGranted
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger
@@ -65,16 +68,27 @@ const UserAccountNav = async ({
                 </div>
 
                 <DropdownMenuSeparator />
-{/* 
+
+                {
+                    (isAdmin) ? (
+                        <>
+                            <DropdownMenuItem asChild>
+                                <Link href='/admin'>Admin Dashboard</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                        </>
+                    ) : null
+                }
+
                 <DropdownMenuItem asChild>
-                    <Link href='/dashboard'>Dashboard</Link>
-                </DropdownMenuItem> */}
-
-                <DropdownMenuSeparator />
-
-                <DropdownMenuItem className='cursor-pointer'>
-                    <LogoutLink>Log out</LogoutLink>
+                    <Link href='/transactions'>My Transactions</Link>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <LogoutLink>
+                    <DropdownMenuItem className='cursor-pointer'>
+                        Log out
+                    </DropdownMenuItem>
+                </LogoutLink>
             </DropdownMenuContent>
         </DropdownMenu>
     )

@@ -17,7 +17,12 @@ export async function GET() {
     if (userDoc.exists()) return redirect("/")
 
     // Create user in db
-    const usersRef = collection(db, "users")
-    await setDoc(doc(usersRef, user.id?.toString()), JSON.parse(JSON.stringify(user)))
-    return Response.json({ user })
+    try {
+        const usersRef = collection(db, "users")
+        await setDoc(doc(usersRef, user.id?.toString()), JSON.parse(JSON.stringify(user)))
+        return redirect("/")
+    } catch (err) {
+        console.log(err)
+    }
+    return redirect("/")
 }
