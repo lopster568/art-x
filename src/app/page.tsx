@@ -1,9 +1,14 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkle } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import Image from 'next/image'
-
+import AnimationPlayer from '@/components/AnimationPlayer'
+import open from "@/components/animations/open.json"
+import security from "@/components/animations/security.json"
+import innovation from "@/components/animations/innovation.json"
+import support from "@/components/animations/support.json"
+import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <>
@@ -49,10 +54,73 @@ export default function Home() {
               className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]'
             />
           </div>
+          <MaxWidthWrapper className='rounded-md mb-12 mt-12 bg-white sm:mt-24 p-12 flex flex-col items-center justify-center text-center' >
+            <div className='mx-auto max-w-5xl '>
+              <div className='mb-12 px-6 lg:px-8'>
+                <div className='mx-auto max-w-2xl sm:text-center flex items-center gap-4 justify-center'>
+                  <h2 className='mt-2 font-bold text-4xl text-gray-900 sm:text-5xl'>
+                    Why choose Us
+                  </h2>
+                  <Sparkle />
+                </div>
+              </div>
 
-          <div>
-            <div className='mx-auto max-w-6xl px-6 lg:px-8'>
-              <div className='mt-16 flow-root sm:mt-24'>
+              {/* steps */}
+              <ol className='my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0'>
+                <li className='md:flex-1'>
+                  <div className='flex flex-col space-y-2  md:pb-0 md:pl-0 md:pt-4 py-2 pl-4 '>
+                    <span className='text-sm font-medium text-blue-600'>
+                      <AnimationPlayer lottie={security} />
+                    </span>
+                    <span className='text-xl font-semibold border-l-4 border-zinc-300 md:border-l-0 md:border-t-2 mt-4'>
+                      Security
+                    </span>
+                    <span className='mt-2 text-zinc-700'>
+                      We have integrated security to our core to ensure that your transactions are safe.
+                      {' '}
+                    </span>
+                  </div>
+                </li>
+                <li className='md:flex-1'>
+                  <div className='flex flex-col space-y-2  md:pb-0 md:pl-0 md:pt-4 py-2 pl-4 '>
+                    <span className='text-sm font-medium text-blue-600'>
+                      <AnimationPlayer lottie={innovation} />
+                    </span>
+                    <span className='text-xl font-semibold border-l-4 border-zinc-300 md:border-l-0 md:border-t-2 mt-4'>
+                      Innovative
+                    </span>
+                    <span className='mt-2 text-zinc-700'>
+                      We proivde a never before way to make payments with transaction images.
+                      {' '}
+                    </span>
+                  </div>
+                </li>
+                <li className='md:flex-1'>
+                  <div className='flex flex-col space-y-2  md:pb-0 md:pl-0 md:pt-4 py-2 pl-4 '>
+                    <span className='text-sm font-medium text-blue-600'>
+                      <AnimationPlayer lottie={support} />
+                    </span>
+                    <span className='text-xl font-semibold border-l-4 border-zinc-300 md:border-l-0 md:border-t-2 mt-4'>
+                      Support
+                    </span>
+                    <span className='mt-2 text-zinc-700'>
+                      Our team works around the clock to ensure that you have the best experience possible.
+                      {' '}
+                    </span>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </MaxWidthWrapper>
+          <div className='w-full' >
+            <div className='mt-24 mx-auto max-w-6xl px-6 lg:px-8 flex flex-col md:flex-row gap-8 justify-around'>
+              <div className='flex flex-col md:flex-col-reverse items-center justify-center text-center'>
+                <AnimationPlayer lottie={open} />
+                <h2 className='mt-2 font-semibold text-3xl text-gray-700 sm:text-5xl'>
+                  Explore our stores today!
+                </h2>
+              </div>
+              <div className='flow-root'>
                 <div className='-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
                   <Image
                     src='/dashboard-preview.jpg'
@@ -82,7 +150,7 @@ export default function Home() {
       </div>
 
       {/* Feature section */}
-      <div className='mx-auto mb-32 mt-32 max-w-5xl sm:mt-56'>
+      <div className='mx-auto mb-12 mt-12 max-w-5xl sm:mt-24'>
         <div className='mb-12 px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
             <h2 className='mt-2 font-bold text-4xl text-gray-900 sm:text-5xl'>
@@ -138,6 +206,7 @@ export default function Home() {
           </li>
         </ol>
       </div>
+      <Footer />
     </>
   )
 }
