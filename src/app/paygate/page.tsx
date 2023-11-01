@@ -1,5 +1,6 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { PayGateForm } from "@/components/PayGateForm";
+import TextAnimation from "@/components/TextAnimation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowUpRight, CornerRightUp } from "lucide-react";
 import Image from "next/image";
@@ -14,11 +15,11 @@ const Page = (
     const sid = searchParams["sid"] as String
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
-            <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-                Complete your{' '}
-                <span className='text-blue-600'>payment</span>{' '}
-                now!
-            </h1>
+            <TextAnimation>
+                <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
+                    Pay to the store!
+                </h1>
+            </TextAnimation>
             <div>
                 <div className='relative isolate'>
                     <div

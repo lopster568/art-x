@@ -1,13 +1,16 @@
 import { MakePaymentForm } from "@/components/MakePaymentForm";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import TextAnimation from "@/components/TextAnimation";
 import Image from "next/image";
 
 const Page = () => {
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
-            <h1 className='text-5xl md:text-left md:self-start text-zinc-800 font-bold md:text-6xl lg:text-7xl'>
-                Welcome to TokyoMall
-            </h1>
+            <TextAnimation>
+                <h1 className='text-5xl md:text-left md:self-start text-zinc-800 font-bold md:text-6xl lg:text-7xl'>
+                    Welcome to TokyoMall
+                </h1>
+            </TextAnimation>
             <p className='mt-5 max-w-4xl text-zinc-700 sm:text-lg md:text-left md:self-start'>
                 Description for TokyoMall Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac mollis quam. Duis id cursus risus. Mauris lacinia, orci luctus sollicitudin ultricies, risus ex tristique nibh, nec commodo nisl justo non lectus. Quisque blandit augue id felis convallis posuere. In hac habitasse platea dictumst. Class
             </p>

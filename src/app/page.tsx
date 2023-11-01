@@ -9,6 +9,8 @@ import security from "@/components/animations/security.json"
 import innovation from "@/components/animations/innovation.json"
 import support from "@/components/animations/support.json"
 import Footer from '@/components/Footer'
+import TextAnimation from '@/components/TextAnimation'
+
 export default function Home() {
   return (
     <>
@@ -18,11 +20,14 @@ export default function Home() {
             Transact with us today!
           </p>
         </div>
-        <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-          Make Seamless{' '}
-          <span className='text-blue-600'>Payments</span>{' '}
-          with Us
-        </h1>
+        <TextAnimation>
+          <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
+            Make Seamless{' '}
+            <span className='text-blue-600'>Payments</span>{' '}
+            with Us
+          </h1>
+        </TextAnimation>
+
         <p className='mt-5 max-w-prose text-zinc-700 sm:text-lg'>
           ART-x allows you to have peer to peer transactions with anyone.
           Simply make an account and start transaction right away.
@@ -34,14 +39,14 @@ export default function Home() {
             className: 'mt-5',
           })}
           href='/stores'
-          >
+        >
           Make a Payment{' '}
           <ArrowRight className='ml-2 h-5 w-5' />
         </Link>
-      </MaxWidthWrapper>
+      </MaxWidthWrapper >
 
       {/* value proposition section */}
-      <div>
+      < div >
         <div className='relative isolate'>
           <div
             aria-hidden='true'
@@ -147,10 +152,10 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
+      </div >
 
       {/* Feature section */}
-      <div className='mx-auto mb-12 mt-12 max-w-5xl sm:mt-24'>
+      < div className='mx-auto mb-12 mt-12 max-w-5xl sm:mt-24' >
         <div className='mb-12 px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl sm:text-center'>
             <h2 className='mt-2 font-bold text-4xl text-gray-900 sm:text-5xl'>
@@ -205,7 +210,7 @@ export default function Home() {
             </div>
           </li>
         </ol>
-      </div>
+      </div >
       <Footer />
     </>
   )

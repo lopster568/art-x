@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import TextAnimation from "@/components/TextAnimation";
 import { buttonVariants } from "@/components/ui/button";
 import { db } from "@/lib/firebase.config";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -25,9 +26,11 @@ const Page = async () => {
         const userTransactions = await getUserTransactions(user.id!) as any;
         return (
             <MaxWidthWrapper className='mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center'>
-                <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-                    Transactions
-                </h1>
+                <TextAnimation>
+                    <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
+                        Transactions
+                    </h1>
+                </TextAnimation>
                 <div>
                     {
                         userTransactions.length === 0 ? (

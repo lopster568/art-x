@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import TextAnimation from "@/components/TextAnimation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
     Card,
@@ -15,10 +16,12 @@ const Page = () => {
     const storeId = "tokyo_mall_12"
     return (
         <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
-            <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-                Explore Our Handpicked{' '}
-                <span className='text-blue-600'>Stores</span>{' '}
-            </h1>
+            <TextAnimation>
+                <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
+                    Explore Our Handpicked{' '}
+                    <span className='text-blue-600'>Stores</span>{' '}
+                </h1>
+            </TextAnimation>
             <p className='mt-5 max-w-prose text-zinc-700 sm:text-lg'>
                 We have collaborated with multiple stores around the world to keep all your transaction at one single place!
             </p>
