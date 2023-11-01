@@ -24,6 +24,7 @@
     "clsx": "^2.0.0",
     "crypto-random-string": "^5.0.0",
     "firebase": "^10.5.0",
+    "framer-motion": "^10.16.4",
     "image-data-uri": "^2.0.1",
     "lucide-react": "^0.284.0",
     "next": "13.5.4",

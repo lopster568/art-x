@@ -72,7 +72,7 @@ export function PayGateForm({ sid, children }: { sid: string, children?: React.R
               <p className="text-bold text-lg">Step 1</p>
               <FormLabel className="text-4xl text-bold" >Amount</FormLabel>
               <FormControl>
-                <Input className="text-2xl py-8" placeholder="100.00₹"  {...field} />
+                <Input autoComplete="off" className="text-2xl py-8 focus-visible:outline-none focus-visible:ring-0  focus-visible:ring-offset-0" placeholder="100.00₹"  {...field} />
               </FormControl>
               <FormDescription className="text-black" >
                 Enter the amount that you are paying

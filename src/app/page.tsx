@@ -34,7 +34,7 @@ export default function Home() {
             className: 'mt-5',
           })}
           href='/stores'
-          target='_blank'>
+          >
           Make a Payment{' '}
           <ArrowRight className='ml-2 h-5 w-5' />
         </Link>

@@ -26,8 +26,7 @@ const Page = async () => {
         return (
             <MaxWidthWrapper className='mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center'>
                 <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
-                    Your {' '}
-                    <span className='text-blue-600'>Transactions</span>
+                    Transactions
                 </h1>
                 <div>
                     {
@@ -80,7 +79,7 @@ const Page = async () => {
                                                 <div className="text-left" >
                                                     <p><span className="font-bold" >Amount: </span>{transaction.amount}₹</p>
                                                     <p><span className="font-bold" >CreatedAt: </span>{transaction.timestamp}</p>
-                                                    <p><span className="font-bold" >StoreId: </span>{transaction.uid}</p>
+                                                    <p><span className="font-bold" >StoreId: </span>{transaction.sid}</p>
                                                     <p><span className="font-bold" >UserId: </span>{transaction.uid}</p>
                                                     <p><span className="font-bold" >Completed: </span>{transaction.completed ? "True" : "False"}</p>
                                                 </div>

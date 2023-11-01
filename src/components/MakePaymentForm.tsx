@@ -13,8 +13,9 @@ import {
   FormMessage,
 } from "./ui/form"
 import { Input } from "./ui/input"
-import { ArrowRightSquare } from "lucide-react"
+import { ArrowRightSquare, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 const profileFormSchema = z.object({
   sid: z
@@ -32,14 +33,18 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export function MakePaymentForm() {
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
   })
   const router = useRouter()
   async function onSubmit(data: ProfileFormValues) {
+    setLoading(true)
     router.replace(`${process.env.NEXT_PUBLIC_BASE_URL}/paygate?sid=${data.sid}`)
   }
+
 
   return (
     <Form {...form}>
@@ -61,7 +66,7 @@ export function MakePaymentForm() {
 
           )}
         />
-        <Button size={"lg"} className="w-full" type="submit">Pay <ArrowRightSquare className="ml-4"  /> </Button>
+        <Button size={"lg"} className="w-full" type="submit">Pay {loading ? <Loader2 className="ml-4" /> : <ArrowRightSquare className="ml-4" />} </Button>
       </form>
     </Form>
   )

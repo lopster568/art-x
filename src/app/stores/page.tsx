@@ -19,6 +19,9 @@ const Page = () => {
                 Explore Our Handpicked{' '}
                 <span className='text-blue-600'>Stores</span>{' '}
             </h1>
+            <p className='mt-5 max-w-prose text-zinc-700 sm:text-lg'>
+                We have collaborated with multiple stores around the world to keep all your transaction at one single place!
+            </p>
             <div>
                 <div className='relative isolate'>
                     {/* <div
@@ -33,7 +36,7 @@ const Page = () => {
                         />
                     </div> */}
 
-                    <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col items-center justify-center text-center'>
+                    <MaxWidthWrapper className='mb-12 mt-24 sm:mt-28 flex flex-col md:flex-row gap-16 items-center justify-center text-center'>
                         <Card className="w-[350px] text-left -m-2 rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl">
                             <CardHeader>
                                 <Image
@@ -49,6 +52,15 @@ const Page = () => {
                             </CardHeader>
                             <CardFooter>
                                 <Link href={`/stores/${storeId}`} className={`${buttonVariants({ size: 'lg' })} w-full`} >Visit Now <ArrowRight className="ml-4" /> </Link>
+                            </CardFooter>
+                        </Card>
+                        <Card className="w-[350px] text-left -m-2 rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl">
+                            <CardHeader>
+                                <CardTitle className="text-zinc-800 font-bold" >Coming Soon ... </CardTitle>
+                                <CardDescription>We are actively working to connect with more stores. Stay Tuned!</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                                <div className={`${buttonVariants({ size: 'lg', variant: "ghost" })} w-full border border-gray-600`} >Stay Tuned </div>
                             </CardFooter>
                         </Card>
                     </MaxWidthWrapper>
