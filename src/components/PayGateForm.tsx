@@ -33,7 +33,7 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export function PayGateForm({ sid }: { sid: string }) {
+export function PayGateForm({ sid, children }: { sid: string, children?: React.ReactNode }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
@@ -81,6 +81,9 @@ export function PayGateForm({ sid }: { sid: string }) {
             </FormItem>
           )}
         />
+        {
+          children
+        }
         <FormField
           name="some"
           render={({ field }) => (

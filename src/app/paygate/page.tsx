@@ -37,12 +37,21 @@ const Page = (
                         <div className='mx-auto min-w-max max-w-2xl p-6'>
                             <div className='mt-16 flow-root sm:mt-24'>
                                 <div className='text-left flex flex-col md:flex-row gap-8 items-center -m-2 rounded-xl bg-gray-900/10 p-8 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl'>
-                                    <div> 
-                                        <PayGateForm sid={sid.toString()} />
+                                    <div>
+                                        <PayGateForm sid={sid.toString()}>
+                                            <div className="flex flex-col md:hidden" >
+                                                <p className="text-lg font-bold" >Pay at: </p>
+                                                <p className=" text-4xl">something@upi</p>
+                                                <Link href={"upi://pay?pa=8800429879@paytm&pn=ROSHAN_SINGH&mc=0000&mode=02&purpose=00&orgid=159761&cust=337841979"} className={`${buttonVariants({ size: "lg" })} text-center my-2 md:hidden`} >Pay with UPI APP <ArrowUpRight /></Link>
+                                                <h1 className="text-lg font-bold my-2" >OR</h1>
+                                                <Image alt="qr" className="self-center" width={300} height={300} src={"/qr.webp"} />
+                                                <h1 className="text-lg font-bold my-2 text-center" >Scan to Pay</h1>
+                                            </div>
+                                        </PayGateForm>
                                         <p className="text-sm mt-2" >Your storeId: {sid}</p>
                                     </div>
-                                    <div className="h-72 mx-4 border border-black" />
-                                    <div className="flex flex-col" >
+                                    <div className="h-72 mx-4 border border-black hidden md:block" />
+                                    <div className="flex flex-col hidden md:block" >
                                         <p className="text-lg font-bold" >Pay at: </p>
                                         <p className=" text-4xl">something@upi</p>
                                         <Link href={"upi://pay?pa=8800429879@paytm&pn=ROSHAN_SINGH&mc=0000&mode=02&purpose=00&orgid=159761&cust=337841979"} className={`${buttonVariants({ size: "lg" })} text-center my-2 md:hidden`} >Pay with UPI APP <ArrowUpRight /></Link>

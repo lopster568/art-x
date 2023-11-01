@@ -23,7 +23,6 @@ const Page = async () => {
     const user = getUser();
     if (user) {
         const userTransactions = await getUserTransactions(user.id!) as any;
-        console.log(userTransactions)
         return (
             <MaxWidthWrapper className='mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center'>
                 <h1 className='max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl'>
@@ -45,7 +44,7 @@ const Page = async () => {
                                         <div className='-m-2 flex flex-col sm:flex-row rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
                                             {
                                                 transaction.approve !== 1 ? (
-                                                    <div className="flex flex-col justify-center w-1/2" >
+                                                    <div className="flex flex-col justify-center py-4 md:w-1/2" >
                                                         {
                                                             transaction.approve === 0 ? (
                                                                 (

@@ -4,7 +4,6 @@ import { db } from "@/lib/firebase.config";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { Download } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 const Page = async ({
     params,
