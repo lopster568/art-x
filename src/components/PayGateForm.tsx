@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "./ui/button"
+// @ts-ignore
 import FileBase64 from "react-file-base64"
 import {
   Form,

@@ -1,10 +1,10 @@
 "use client"
-import { Loader2, StepForward } from "lucide-react"
-import { useRouter } from "next/navigation"
-import FileBase64 from "react-file-base64"
+import { StepForward } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Redeem from '@/components/animations/redeem.json';
 import { Player } from '@lottiefiles/react-lottie-player';
-import Redeem from '@/components/animations/redeem.json'
-import { useState } from "react";
+// @ts-ignore
+import FileBase64 from "react-file-base64";
 const UploadImg = () => {
     // const [loading, setLoading] = useState(false)
     const router = useRouter()

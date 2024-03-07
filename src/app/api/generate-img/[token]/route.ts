@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server"
 import { faker } from "@faker-js/faker"
+// @ts-ignore
 import imageDataURI from "image-data-uri"
-import { useSearchParams } from "next/navigation"
+import { NextRequest } from "next/server"
 
 export const GET = async (req: NextRequest, { params }: any) => {
     const { token } = params
